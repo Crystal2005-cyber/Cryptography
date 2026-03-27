@@ -1,0 +1,23 @@
+def rc5_encrypt(A, B, key, rounds=4):
+    for i in range(rounds):
+        A = (A ^ B) + key
+        B = (B ^ A) + key
+    return A, B
+
+
+def rc5_decrypt(A, B, key, rounds=4):
+    for i in range(rounds):
+        B = (B - key) ^ A
+        A = (A - key) ^ B
+    return A, B
+
+
+A = int(input("Enter A: "))
+B = int(input("Enter B: "))
+key = int(input("Enter key: "))
+
+encA, encB = rc5_encrypt(A, B, key)
+print("Encrypted:", encA, encB)
+
+decA, decB = rc5_decrypt(encA, encB, key)
+print("Decrypted:", decA, decB)
