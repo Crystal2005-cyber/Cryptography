@@ -1,0 +1,26 @@
+# Latin Square Combiner Cipher
+
+latin_square = [
+    [0,1,2,3],
+    [1,2,3,0],
+    [2,3,0,1],
+    [3,0,1,2]
+]
+
+def latin_square_cipher(text, key):
+    cipher = ""
+    for i, ch in enumerate(text):
+        if ch.isalpha():
+            row = ord(key[i % len(key)]) % 4
+            col = ord(ch.upper()) % 4
+            cipher += chr((latin_square[row][col] + ord('A')))
+        else:
+            cipher += ch
+    return cipher
+
+
+plain = input("Enter Plain Text: ")
+key = input("Enter Key: ")
+
+encrypted = latin_square_cipher(plain, key)
+print("Encrypted Text:", encrypted)
