@@ -1,0 +1,23 @@
+# Diffie-Hellman Key Exchange
+
+# Input public values
+p = int(input("Enter prime number (p): "))
+g = int(input("Enter primitive root (g): "))
+
+# Private keys
+a = int(input("Enter private key of Alice: "))
+b = int(input("Enter private key of Bob: "))
+
+# Public keys
+A = (g ** a) % p
+B = (g ** b) % p
+
+print("\nPublic Key of Alice:", A)
+print("Public Key of Bob:", B)
+
+# Shared keys
+K1 = (B ** a) % p
+K2 = (A ** b) % p
+
+print("\nShared Key (Alice):", K1)
+print("Shared Key (Bob):", K2)
