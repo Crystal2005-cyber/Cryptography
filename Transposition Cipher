@@ -1,0 +1,64 @@
+import math
+
+# Encryption function
+def encrypt_transposition(text, key):
+    cipher = ""
+    text = text.replace(" ", "")
+    
+    # Calculate number of rows
+    rows = math.ceil(len(text) / key)
+
+    # Pad text with X if necessary
+    padded_text = text.ljust(rows * key, 'X')
+
+    # Create matrix
+    matrix = []
+    index = 0
+    for r in range(rows):
+        matrix.append(padded_text[index:index+key])
+        index += key
+
+    # Read column-wise
+    for col in range(key):
+        for row in range(rows):
+            cipher += matrix[row][col]
+
+    return cipher
+
+
+# Decryption function
+def decrypt_transposition(cipher, key):
+    plain = ""
+    rows = math.ceil(len(cipher) / key)
+
+    # Create empty matrix
+    matrix = [['' for _ in range(key)] for _ in range(rows)]
+
+    index = 0
+
+    # Fill column-wise
+    for col in range(key):
+        for row in range(rows):
+            if index < len(cipher):
+                matrix[row][col] = cipher[index]
+                index += 1
+
+    # Read row-wise
+    for row in range(rows):
+        plain += "".join(matrix[row])
+
+    return plain.rstrip("X")
+
+
+# Main Program
+if __name__ == "__main__":
+    print("===== Transposition Cipher =====")
+
+    text = input("Enter Plain Text: ")
+    key = int(input("Enter Key (Number of Columns): "))
+
+    encrypted_text = encrypt_transposition(text, key)
+    print("\nEncrypted Text:", encrypted_text)
+
+    decrypted_text = decrypt_transposition(encrypted_text, key)
+    print("Decrypted Text:", decrypted_text)
