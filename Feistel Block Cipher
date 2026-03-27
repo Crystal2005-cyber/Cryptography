@@ -1,0 +1,34 @@
+def feistel_round(left, right, key):
+    new_left = right
+    new_right = left ^ (right ^ key)
+    return new_left, new_right
+
+
+def feistel_encrypt(block, key, rounds=4):
+    left = (block >> 4) & 0xF
+    right = block & 0xF
+
+    for i in range(rounds):
+        left, right = feistel_round(left, right, key)
+
+    return (left << 4) | right
+
+
+def feistel_decrypt(block, key, rounds=4):
+    left = (block >> 4) & 0xF
+    right = block & 0xF
+
+    for i in range(rounds):
+        left, right = right, left ^ (right ^ key)
+
+    return (left << 4) | right
+
+
+block = int(input("Enter number (0-255): "))
+key = int(input("Enter key: "))
+
+enc = feistel_encrypt(block, key)
+print("Encrypted:", enc)
+
+dec = feistel_decrypt(enc, key)
+print("Decrypted:", dec)
