@@ -1,0 +1,20 @@
+def blowfish_encrypt(text, key):
+    result = ""
+    for i, ch in enumerate(text):
+        result += chr((ord(ch) + key[i % len(key)]) % 256)
+    return result
+
+def blowfish_decrypt(cipher, key):
+    result = ""
+    for i, ch in enumerate(cipher):
+        result += chr((ord(ch) - key[i % len(key)]) % 256)
+    return result
+
+text = input("Enter text: ")
+key = [ord(c) for c in input("Enter key: ")]
+
+cipher = blowfish_encrypt(text, key)
+print("Encrypted:", cipher)
+
+plain = blowfish_decrypt(cipher, key)
+print("Decrypted:", plain)
