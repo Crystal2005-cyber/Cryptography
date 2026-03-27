@@ -1,0 +1,28 @@
+# Simplified SEAL-like Stream Cipher
+
+def seal_keystream(seed, length):
+    ks = []
+    value = seed
+    for _ in range(length):
+        value = (value * 1103515245 + 12345) % 256
+        ks.append(value)
+    return ks
+
+
+def seal_encrypt(text, seed):
+    ks = seal_keystream(seed, len(text))
+    cipher = ""
+
+    for i, ch in enumerate(text):
+        cipher += chr(ord(ch) ^ ks[i])
+    return cipher
+
+
+text = input("Enter Plain Text: ")
+seed = int(input("Enter Numeric Key: "))
+
+cipher = seal_encrypt(text, seed)
+print("Encrypted:", cipher)
+
+decrypted = seal_encrypt(cipher, seed)
+print("Decrypted:", decrypted)
