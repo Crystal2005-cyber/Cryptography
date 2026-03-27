@@ -1,0 +1,15 @@
+def simple_des(text, key):
+    result = ""
+    for i in range(len(text)):
+        result += chr(ord(text[i]) ^ key)
+    return result
+
+
+text = input("Enter text: ")
+key = int(input("Enter numeric key: "))
+
+cipher = simple_des(text, key)
+print("Encrypted:", cipher)
+
+plain = simple_des(cipher, key)
+print("Decrypted:", plain)
