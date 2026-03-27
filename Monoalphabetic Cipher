@@ -1,0 +1,60 @@
+import string
+
+# Function to generate cipher mapping
+def create_cipher_key():
+    plain_alphabet = string.ascii_uppercase
+    cipher_alphabet = "QWERTYUIOPASDFGHJKLZXCVBNM"  # Fixed substitution key
+
+    encryption_map = dict(zip(plain_alphabet, cipher_alphabet))
+    decryption_map = dict(zip(cipher_alphabet, plain_alphabet))
+
+    return encryption_map, decryption_map
+
+
+# Encryption function
+def encrypt(plaintext, encryption_map):
+    ciphertext = ""
+
+    for char in plaintext.upper():
+        if char in encryption_map:
+            ciphertext += encryption_map[char]
+        else:
+            ciphertext += char  # Keep spaces, punctuation unchanged
+
+    return ciphertext
+
+
+# Decryption function
+def decrypt(ciphertext, decryption_map):
+    plaintext = ""
+
+    for char in ciphertext.upper():
+        if char in decryption_map:
+            plaintext += decryption_map[char]
+        else:
+            plaintext += char
+
+    return plaintext
+
+
+# Main Program
+if __name__ == "__main__":
+    encryption_map, decryption_map = create_cipher_key()
+
+    print("===== Monoalphabetic Cipher =====")
+    message = input("Enter message: ")
+
+    print("\n1. Encrypt")
+    print("2. Decrypt")
+    choice = int(input("Enter choice: "))
+
+    if choice == 1:
+        encrypted_text = encrypt(message, encryption_map)
+        print("\nEncrypted Message:", encrypted_text)
+
+    elif choice == 2:
+        decrypted_text = decrypt(message, decryption_map)
+        print("\nDecrypted Message:", decrypted_text)
+
+    else:
+        print("Invalid choice!")
