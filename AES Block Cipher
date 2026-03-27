@@ -1,0 +1,24 @@
+def simple_aes_encrypt(text, key):
+    result = ""
+    for i, ch in enumerate(text):
+        val = (ord(ch) + key[i % len(key)]) % 256
+        result += chr(val)
+    return result
+
+
+def simple_aes_decrypt(cipher, key):
+    result = ""
+    for i, ch in enumerate(cipher):
+        val = (ord(ch) - key[i % len(key)]) % 256
+        result += chr(val)
+    return result
+
+
+text = input("Enter text: ")
+key = [ord(c) for c in input("Enter key: ")]
+
+cipher = simple_aes_encrypt(text, key)
+print("Encrypted:", cipher)
+
+plain = simple_aes_decrypt(cipher, key)
+print("Decrypted:", plain)
